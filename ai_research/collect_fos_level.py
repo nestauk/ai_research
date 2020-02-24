@@ -9,8 +9,8 @@ from sqlalchemy.sql import exists
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv, find_dotenv
 import ai_research
-from ai_research.data.mag_orm import FieldOfStudy, FosMetadata
-from ai_research.data.query_mag_composite import query_fields_of_study
+from ai_research.mag.mag_orm import FieldOfStudy, FosMetadata
+from ai_research.mag.query_mag_composite import query_fields_of_study
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
