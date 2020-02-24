@@ -1,10 +1,10 @@
 import pytest
 from unittest import mock
 
-from ai_research.data.query_mag_composite import build_expr
-from ai_research.data.query_mag_composite import query_mag_api
-from ai_research.data.query_mag_composite import build_composite_expr
-from ai_research.data.query_mag_composite import build_composite_expr_date
+from ai_research.mag.query_mag_composite import build_expr
+from ai_research.mag.query_mag_composite import query_mag_api
+from ai_research.mag.query_mag_composite import build_composite_expr
+from ai_research.mag.query_mag_composite import build_composite_expr_date
 
 
 class TestBuildExpr:
@@ -37,7 +37,7 @@ def test_build_composite_by_date_queries_correctly():
     )
 
 
-@mock.patch("ai_research.data.query_mag_composite.requests.post", autospec=True)
+@mock.patch("ai_research.mag.query_mag_composite.requests.post", autospec=True)
 def test_query_mag_api_sends_correct_request(mocked_requests):
     sub_key = 123
     fields = ["Id", "Ti"]

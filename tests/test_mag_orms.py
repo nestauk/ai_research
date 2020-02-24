@@ -3,7 +3,7 @@ import unittest
 import os
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from ai_research.data.mag_orm import Base
+from ai_research.mag.mag_orm import Base
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())

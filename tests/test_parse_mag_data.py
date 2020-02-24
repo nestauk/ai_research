@@ -1,11 +1,11 @@
 import pytest
 
 import numpy as np
-from ai_research.data.parse_mag_data import parse_papers
-from ai_research.data.parse_mag_data import parse_affiliations
-from ai_research.data.parse_mag_data import parse_authors
-from ai_research.data.parse_mag_data import parse_fos
-from ai_research.data.parse_mag_data import parse_journal
+from ai_research.mag.parse_mag_data import parse_papers
+from ai_research.mag.parse_mag_data import parse_affiliations
+from ai_research.mag.parse_mag_data import parse_authors
+from ai_research.mag.parse_mag_data import parse_fos
+from ai_research.mag.parse_mag_data import parse_journal
 
 test_example = {
     "logprob": -17.825,
