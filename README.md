@@ -4,9 +4,9 @@ ai_research
 AI research work (full description to be updated)
 
 ## How to use this repository ##
-To rerun the data collection and analysis, create a new Anaconda environment with Python >3.6, run `$ pip install -r requirements.txt` to install the Python packages needed for the project, get the required API keys and setup PostgreSQL as described [here](/ai_research/README.md). Then, run the following scripts contained in the `ai_research` directory:
+To rerun the data collection and analysis, create a new Anaconda environment with Python >3.6, run `$ pip install -r requirements.txt` to install the Python packages needed for the project, `$ pip install -e .` to install the `ai_research` repo, get the required API keys and setup PostgreSQL as described [here](/ai_research/README.md). Then, run the following scripts contained in the `ai_research` directory:
 
-1. `$ python mag/mag_orm.py`: Creates a PostgreSQL DB named `ai_ci` and the tables needed for this project.
+1. `$ python mag/mag_orm.py`: Creates a PostgreSQL DB named `ai_research` and the tables needed for this project.
 2. `$ python query_fos_mag.py`: Collects data from MAG for sets of Fields of Study.
 3. `$ python parse_mag.py`: Parses the MAG responses and stores them in PostgreSQL DB.
 4. `$ python geocode_affiliations.py`: Geocodes author affiliations.
