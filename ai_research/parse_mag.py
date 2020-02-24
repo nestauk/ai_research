@@ -18,7 +18,7 @@ from ai_research.mag.parse_mag_data import (
     parse_papers,
     parse_conference,
 )
-from ai_research.data.mag_orm import (
+from ai_research.mag.mag_orm import (
     Paper,
     PaperAuthor,
     Journal,
