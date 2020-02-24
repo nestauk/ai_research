@@ -1,0 +1,10 @@
+data:
+    mag:
+        timeframe: [2000, 2020]
+        metadata: ["Id", "Ti", "AA.AfId","AA.AfN","AA.AuId","AA.DAuN","AA.S","CC","D","F.DFN","F.FId","J.JId","J.JN","Pt","RId","Y","DOI","PB","BT","IA","F.FN", "C.CN", "C.CId"]
+        ml_fos: ["deep learning", "machine learning", "reinforcement learning"]
+        entity_name: 'F.FN'
+        query_count: 1000
+        store_path: 'data/raw/mag_response'
+    external:
+        path: 'data/raw/'
