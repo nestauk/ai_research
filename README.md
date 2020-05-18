@@ -1,7 +1,7 @@
-ai_research
+The Privatization of AI Research: Causes and Consequences
 ==============================
 
-AI research work (full description to be updated)
+We analyze the causes and consequences of the ongoing privatization of AI research, particularly the transition of AI researchers from academia to industry. This is a collaborative work between the [Aalborg University](https://www.en.aau.dk/) and [Nesta](https://www.nesta.org.uk/).
 
 ## How to use this repository ##
 To rerun the data collection and analysis, create a new Anaconda environment with Python >3.6, run `$ pip install -r requirements.txt` to install the Python packages needed for the project, `$ pip install -e .` to install the `ai_research` repo, get the required API keys and setup PostgreSQL as described [here](/ai_research/README.md). Then, run the following scripts contained in the `ai_research` directory:
