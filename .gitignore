@@ -94,3 +94,4 @@ target/
 
 # Mypy cache
 .mypy_cache/
+.Rproj.user
