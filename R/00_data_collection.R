@@ -38,6 +38,11 @@ tbl_mag_affiliation %>% head()
 tbl_geocoded_places <- tbl(con, "geocoded_places") 
 tbl_geocoded_places %>% glimpse()
 
+mag_fields_of_study <- tbl(con, "mag_fields_of_study") 
+mag_fields_of_study %>% glimpse()
+
+
+
 ############################################################################
 # Merging
 ############################################################################
@@ -137,5 +142,7 @@ tbl_author_year %>%
   select(transited, paper_n, cit_mean) %>%
   group_by(transited) %>%
   summarise_all(mean)
+
+
 
 
