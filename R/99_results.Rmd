@@ -1,0 +1,327 @@
+---
+title: 'Privatization of AI research: Some results'
+author: "Daniel S. Hain (dsh@business.aau.dk)"
+date: "Updated `r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_notebook:
+    code_folding: hide
+    df_print: paged
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+    theme: flatly
+---
+
+```{r setup, include=FALSE}
+# Knitr options
+### Generic preamble
+Sys.setenv(LANG = "en") # For english language
+options(scipen = 5) # To deactivate annoying scientific number notation
+
+# rm(list=ls()); graphics.off() # get rid of everything in the workspace
+if (!require("knitr")) install.packages("knitr"); library(knitr) # For display of the markdown
+
+### Knitr options
+knitr::opts_chunk$set(warning=FALSE,
+                     message=FALSE,
+                     fig.align="center"
+                     )
+
+library(DBI) # GEneral R database interface
+library(RPostgres) # PostgreSQL interface driver
+library(dbplyr) # for dplyr with databases
+
+### Database connection
+
+# set up connection to existing PostgreSQL database, just plug in own details
+con <- dbConnect(drv = RPostgres::Postgres(), 
+                 dbname = "patentdb",
+                 host = "130.225.57.105", port = 5432,
+                 user = "patentdbowner", password = "e6rKPT2iZ99@PKaa")
+```
+
+
+
+```{r}
+### Load packages
+library(tidyverse) # Collection of all the good stuff like dplyr, ggplot2 ect.
+library(magrittr) # For extra-piping operators (eg. %<>%)
+
+# Suvival
+library(survival)
+library(survminer)
+library(ggfortify)
+
+# Descriptives
+library(skimr)
+library(stargazer)
+
+# Viz
+library(patchwork)
+```
+
+# Loading data
+
+## Institutions
+
+```{r}
+tbl_affiliation_dyn <- readRDS('../../temp/tbl_institutions_main_indicators.rds')
+```
+
+```{r}
+tbl_affiliation_dyn %>% skim()
+```
+
+**Note:** Not included now, have to think if/how
+
+# Author Data
+
+## Static
+
+```{r}
+tbl_author_stat <- readRDS('../../temp/tbl_author_type.rds')
+```
+
+We only include researcher which are observed for at least five years after 2000. Furthermore, since the migration of AI researchers from academia to industry represents a recent phenomenon, we furthermore exclude researcher where the latest observation was before 2015. 
+
+```{r}
+# Filter only for author types interesting here
+tbl_author_stat %<>%
+  filter(author_type %in% c('academia', 'switcher') &
+           year_n >= 5 &
+           year_end >= 2015) 
+```
+
+```{r}
+# Insert gender
+tbl_author_stat %<>% 
+  left_join(tbl(con, "author_gender") %>% select(id, full_name, gender), by = c('author_id' = 'id'), copy = TRUE) %>%
+  replace_na(list(gender = 'male')) %>% # Strong assumption to get rid of NAs
+  mutate(gender = ifelse(gender == 'male', TRUE, FALSE)) # Coded logical, where male = 1
+```
+
+```{r}
+tbl_author_stat %>% skim()
+```
+
+```{r, results = "asis"}
+tbl_author_stat %>% 
+  as.data.frame() %>%
+  select(-author_id) %>%
+  stargazer(type = "html")
+```
+
+## Author Dynamic
+
+```{r}
+tbl_author_dyn <- readRDS('../../temp/tbl_author_dyn_all.rds')
+```
+
+```{r}
+# deal with NAs
+tbl_author_dyn %<>%
+  replace_na(list(cent_dgr = 0, cent_dgr_ind = 0, field_of_study_id = 0, field_of_study_name = 'none', field_n = 0, dl_n = 0, dl_researcher = FALSE))
+```
+
+### Field of study
+
+```{r}
+fos_main <- tbl_author_dyn %>% count(field_of_study_name, sort = TRUE)
+```
+
+```{r}
+fos_main 
+```
+To limit the number of controls, we control for the 10 most popular fields of study, and collect all remaining into one category (others).
+
+```{r}
+tbl_author_dyn %<>%
+  mutate(field_of_study_name = ifelse(field_of_study_name %in% (fos_main %>% slice(2:11) %>% pull(field_of_study_name)), field_of_study_name, 'others') %>% factor())
+```
+
+```{r}
+author_main_fos <- tbl_author_dyn %>%
+  count(author_id, field_of_study_name, sort = TRUE) %>%
+  group_by(author_id) %>%
+    mutate(n = ifelse(field_of_study_name == 'others', 0, n)) %>%
+    arrange(author_id, desc(n)) %>%
+    slice(1:1) %>%
+  ungroup()
+```
+
+```{r}
+# Join with author static
+tbl_author_stat %<>% 
+  left_join(author_main_fos %>% select(author_id, field_of_study_name), by = 'author_id') %>%
+  replace_na(list(field_of_study_name = 'others')) 
+```
+
+
+# Propensity Score matching
+
+Since our data contains 
+```{r}
+library(MatchIt)
+match_psm <- tbl_author_stat %>% 
+  mutate(author_type = (author_type %>% factor() %>% as.numeric()) -1 ) %>%
+  drop_na()
+```
+
+
+```{r}
+match_psm  %<>% matchit(author_type ~ paper_mean + cit_mean + year_n + year_end + gender + field_of_study_name, 
+                      data = ., method = "nearest", ratio = 1)
+```
+
+```{r}
+summary(match_psm)
+```
+
+```{r}
+# Match table for use lateron
+match_psm_out <- match_psm %>% 
+  match.data() %>% 
+  as_tibble() %>% 
+  select(author_id, distance, weights)
+```
+
+
+# PSM matched data for regression
+
+## Data preperation
+```{r}
+# Create main data with restrictions on type
+data <- tbl_author_dyn %>% 
+  inner_join(tbl_author_stat %>% select(author_id, gender), by = 'author_id')
+```
+
+```{r}
+# Create some variables
+data %<>%
+  group_by(author_id) %>%
+  mutate(seniority = year - min(year, na.rm = TRUE) + 1,
+         cit_n = cit_mean * paper_n,
+         cit_n_cum = cit_n %>% cumsum(),
+         citation_rank = cit_mean %>% percent_rank()) %>%
+  ungroup()
+```
+
+
+```{r}
+### Prepare for regression
+data_surv <- data %>% 
+  semi_join(match_psm_out, by = 'author_id') %>%
+  group_by(author_id) %>%
+  mutate(cit_n_cum = cit_n_cum %>% lag(1),
+         citation_rank = citation_rank %>% lag(1),
+         cent_dgr = cent_dgr %>% lag(1),
+         cent_dgr_ind = cent_dgr %>% lag(1),
+         dl_researcher = dl_researcher %>% lag(1),
+         field_of_study_name = field_of_study_name %>% lag(1)) %>%
+  ungroup() %>%
+  filter(year >= 2000) %>%
+  group_by(author_id) %>%
+  mutate(time = 1:n()) %>%
+  ungroup() %>%
+  mutate(year = year %>% factor) %>%
+  drop_na()
+```
+
+```{r}
+# other variables to try
+data_surv %<>%
+  mutate(star = citation_rank >= 0.9)
+```
+
+
+```{r}
+# Surf object
+surv_object <- Surv(time = data_surv$time, event = data_surv$transited)
+```
+
+# Kaplan-Meier Method and Log Rank Test
+
+```{r}
+fit_km0 <- survfit(surv_object ~ 1,
+                   data = data_surv)
+
+fit_km1 <- survfit(surv_object ~ star,
+                   data = data_surv)
+
+fit_km2 <- survfit(surv_object ~ dl_researcher,
+                   data = data_surv)
+
+fit_km3 <- survfit(surv_object ~ gender,
+                   data = data_surv)
+```
+                   
+```{r}
+#p1 <- fit_km0 %>% ggsurvplot(data = data_surv, pval = TRUE) + labs(title= 'KM: baseline')
+#p2 <- fit_km1 %>% ggsurvplot(data = data_surv, pval = TRUE) + labs(title= 'KM: Star citations')
+#p3 <- fit_km2 %>% ggsurvplot(data = data_surv, pval = TRUE) + labs(title= 'KM: DL researcher')
+#p4 <- fit_km3 %>% ggsurvplot(data = data_surv, pval = TRUE) + labs(title= 'KM: Gender')
+```
+
+```{r}
+p1 <- fit_km0 %>% autoplot() + labs(title= 'KM: baseline')
+p2 <- fit_km1 %>% autoplot() + labs(title= 'KM: Star citations')
+p3 <- fit_km2 %>% autoplot() + labs(title= 'KM: DL researcher')
+p4 <- fit_km3 %>% autoplot() + labs(title= 'KM: Gender')
+```
+
+
+```{r}
+(p1 + p2) / (p3 + p4) + 
+  plot_layout(guides = "collect") & theme(legend.position = 'bottom') & labs(x = 'Time', y = 'Survival Probability')
+```
+We see that...
+
+```{r}
+data_surv %>% skim()
+```
+
+
+## Cox Proportional Hazard Model
+
+```{r}
+### Fir Cox proportional hazard model
+
+#Baseline
+fit_cox0 <- coxph(surv_object ~ seniority + gender + field_of_study_name,
+                  data = data_surv)
+
+fit_cox1 <- coxph(surv_object ~ seniority + gender + field_of_study_name + dl_researcher,
+                  data = data_surv)
+
+fit_cox2 <- coxph(surv_object ~ seniority + gender + field_of_study_name + cent_dgr + cent_dgr_ind,
+                  data = data_surv)
+
+fit_cox3 <- coxph(surv_object ~ seniority + gender + field_of_study_name + paper_n + citation_rank + log(cit_n_cum + 1) ,
+                  data = data_surv)
+
+fit_cox4 <- coxph(surv_object ~ seniority + gender + field_of_study_name + dl_researcher + cent_dgr + cent_dgr_ind +  paper_n + citation_rank + log(cit_n_cum + 1),
+                  data = data_surv)
+# dl_researcher + cent_dgr + cent_dgr_ind + citation_rank + cit_n_cum + paper_n + ,
+
+```
+
+
+
+
+```{r, results = "asis"}
+stargazer(fit_cox0, fit_cox1, fit_cox2, fit_cox3, fit_cox4, type = 'latex')
+```
+
+
+
+```{r}
+fit_cox %>% ggforest(data = data_surv)
+```
+
+
+
+
+
+
+
