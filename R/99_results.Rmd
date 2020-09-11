@@ -39,6 +39,35 @@ con <- dbConnect(drv = RPostgres::Postgres(),
                  dbname = "patentdb",
                  host = "130.225.57.105", port = 5432,
                  user = "patentdbowner", password = "e6rKPT2iZ99@PKaa")
+
+### Define functions
+corstarsl <- function(x){
+  require(Hmisc)
+  x <- as.matrix(x)
+  R <- rcorr(x)$r
+  p <- rcorr(x)$P
+
+  ## define notions for significance levels; spacing is important.
+  mystars <- ifelse(p < .001, "*", " ")
+
+  ## trunctuate the matrix that holds the correlations to two decimal
+  R <- format(round(cbind(rep(-1.11, ncol(x)), R), 2))[,-1]
+
+  ## build a new matrix that includes the correlations with their apropriate stars
+  Rnew <- matrix(paste(R, mystars, sep=""), ncol=ncol(x))
+  diag(Rnew) <- paste(diag(R), " ", sep="")
+  rownames(Rnew) <- colnames(x)
+  colnames(Rnew) <- paste(colnames(x), "", sep="")
+
+  ## remove upper triangle
+  Rnew <- as.matrix(Rnew)
+  Rnew[upper.tri(Rnew, diag = TRUE)] <- ""
+  Rnew <- as.data.frame(Rnew)
+
+  ## remove last column and return the matrix (which is now a data frame)
+  Rnew <- cbind(Rnew[1:length(Rnew)-1])
+  return(Rnew)
+}
 ```
 
 
@@ -307,8 +336,6 @@ fit_cox4 <- coxph(surv_object ~ seniority + gender + field_of_study_name + dl_re
 ```
 
 
-
-
 ```{r, results = "asis"}
 stargazer(fit_cox0, fit_cox1, fit_cox2, fit_cox3, fit_cox4, type = 'latex')
 ```
@@ -316,12 +343,105 @@ stargazer(fit_cox0, fit_cox1, fit_cox2, fit_cox3, fit_cox4, type = 'latex')
 
 
 ```{r}
-fit_cox %>% ggforest(data = data_surv)
+fit_cox4 %>% ggforest(data = data_surv)
+```
+
+
+# Descriptives
+
+## Descriptive statistics
+
+```{r, results = "asis"}
+data_surv %>% select(switch, affiliation, seniority, gender, dl_researcher, paper_n, citation_rank, cit_n_cum, cent_dgr, cent_dgr_ind) %>%
+  mutate(cit_n_cum = log(cit_n_cum + 1) %>% round(2)) %>% as.data.frame() %>% 
+  stargazer(
+#    type = 'html'
+    type = 'latex'
+    )
+```
+
+## Correlation Matrix
+
+```{r}
+cormat <- data_surv %>% select(switch, affiliation, seniority, gender, dl_researcher, paper_n, citation_rank, cit_n_cum, cent_dgr, cent_dgr_ind) %>% corstarsl()
+```
+
+```{r, results='asis'}
+cormat %>% as.data.frame() %>% stargazer(
+#  type = 'html',
+  type = 'latex',
+          summary = FALSE,
+#          out="../../output/tab_corr_mat.tex",
+          label="tab:corr_mat",
+          title="Correlation Matrix",
+          notes="$^{*}$p$<$0.001",
+          notes.align = "l",
+          no.space=TRUE
+          )
+```
+
+## Diagnostic plot
+
+```{r}
+library(GGally)
+data_surv %>% select(author_type, paper_n, citation_rank, cit_n_cum, cent_dgr, cent_dgr_ind) %>% ggpairs(aes(alpha = 0.3,), ggtheme = theme_gray())  
+
+ggsave("fig_desc_matrix.png", path = '../../output/', device = 'png', width = 15, height = 15)
 ```
 
 
 
+## Descriptives Composition
+
+```{r}
+desc_author_stat <- readRDS('../../temp/tbl_author_type.rds')
+```
+
+```{r}
+desc_author_stat %<>% 
+  left_join(tbl(con, "author_gender") %>% select(id, full_name, gender), by = c('author_id' = 'id'), copy = TRUE) %>%
+  replace_na(list(gender = 'male')) %>% # Strong assumption to get rid of NAs
+  mutate(gender = ifelse(gender == 'male', TRUE, FALSE))
+```
+
+```{r}
+desc_author_stat %<>%
+  filter(year_n >= 5 &
+           year_end >= 2015) 
+```
 
 
+           
+```{r}
+tbl_desc_author <- desc_author_stat %>%
+  select(author_type, paper_mean, cit_mean, year_n, gender) %>%
+  group_by(author_type) %>%
+  summarise(n = n(),
+            paper_mean = paper_mean %>% mean() %>% round(2),
+            cit_mean = cit_mean %>% mean() %>% round(2),
+            year_n = year_n %>% mean() %>% round(2),
+            gender = gender %>% mean() %>% round(2)) %>%
+  mutate(pct = n / sum(n) %>% round(2)) %>%
+  select(author_type, n, pct, everything())
+```
+
+```{r}
+tbl_desc_author %>% stargazer(summary = FALSE, rownames = FALSE)
+```
+
+## Dynamics
+
+```{r}
+data_surv %>% 
+  filter(switch == TRUE) %>% 
+  count(year) %>%
+  ungroup() %>%
+  arrange(year) %>%
+  mutate(year = year %>% as.character() %>% as.numeric()) %>%
+  filter(year <= 2018) %>%
+  ggplot(aes(x = year, y = n)) + geom_line()
+
+ggsave("fig_timeline_switch.pdf", path = '../../output/', device = 'pdf', width = 10, height = 5)
+```
 
 

@@ -193,7 +193,7 @@ tbl_dl_fields <- tbl_mag_paper_fields_of_study %>%
   compute()
 
 dl_papers <- tbl_mag_paper_fields_of_study %>%
-  semi_join(tbl_dl_fields, by = 'field_of_study_id')) %>%
+  semi_join(tbl_dl_fields, by = 'field_of_study_id') %>%
   distinct(paper_id) %>%
   compute()
 
