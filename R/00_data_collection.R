@@ -85,6 +85,10 @@ tbl_author_paper <- tbl_mag_papers %>%
   inner_join(tbl_affiliation_type, by = c('affiliation_id' = 'id')) %>%
   compute()
 
+tbl_author_paper %>% 
+  collect() %>%
+  saveRDS('../temp/tbl_author_paper.rds')
+
 ###
 # TODO: Some preselection??????
 ###

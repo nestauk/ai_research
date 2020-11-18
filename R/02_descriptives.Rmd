@@ -1,28 +1,170 @@
 ---
-¢title: "Untitled"
-output: html_document
+title: 'Privatization of AI research: Some EDA'
+author: "Daniel S. Hain (dsh@business.aau.dk)"
+date: "Updated `r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_notebook:
+    code_folding: hide
+    df_print: paged
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+    theme: flatly
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+# Knitr options
+### Generic preamble
+rm(list = ls())
+Sys.setenv(LANG = "en") # For english language
+options(scipen = 5) # To deactivate annoying scientific number notation
+
+# rm(list=ls()); graphics.off() # get rid of everything in the workspace
+if (!require("knitr")) install.packages("knitr"); library(knitr) # For display of the markdown
+
+### Knitr options
+knitr::opts_chunk$set(warning=FALSE,
+                     message=FALSE,
+                     fig.align="center"
+                     )
+
+library(DBI) # GEneral R database interface
+library(RPostgres) # PostgreSQL interface driver
+library(dbplyr) # for dplyr with databases
+
+### Database connection
+
+# set up connection to existing PostgreSQL database, just plug in own details
+con <- dbConnect(drv = RPostgres::Postgres(), 
+                 dbname = "patentdb",
+                 host = "130.225.57.105", port = 5432,
+                 user = "patentdbowner", password = "e6rKPT2iZ99@PKaa")
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
+### Load packages
+library(tidyverse) # Collection of all the good stuff like dplyr, ggplot2 ect.
+library(magrittr) # For extra-piping operators (eg. %<>%)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+# Descriptives
+library(skimr)
+library(stargazer)
 
-```{r cars}
-summary(cars)
+# Viz
+library(patchwork)
 ```
 
-## Including Plots
+# Load the data
 
-You can also embed plots, for example:
+## Institutions
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+tbl_affiliation_dyn <- readRDS('../../temp/tbl_institutions_main_indicators.rds')
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+tbl_affiliation_dyn %>% glimpse()
+```
+
+## Authors
+
+### Static
+
+```{r}
+tbl_author_stat <- readRDS('../../temp/tbl_author_type.rds')
+```
+
+```{r}
+# Insert gender
+tbl_author_stat %<>% 
+  left_join(tbl(con, "author_gender") %>% select(id, full_name, gender), by = c('author_id' = 'id'), copy = TRUE) %>%
+  replace_na(list(gender = 'male')) %>% # Strong assumption to get rid of NAs
+  mutate(gender = ifelse(gender == 'male', TRUE, FALSE)) # Coded logical, where male = 1
+```
+
+```{r}
+tbl_author_stat %>% skim()
+```
+
+### Author Dynamic
+
+```{r}
+tbl_author_dyn <- readRDS('../../temp/tbl_author_dyn_all.rds')
+```
+
+```{r}
+# deal with NAs
+tbl_author_dyn %<>%
+  replace_na(list(cent_dgr = 0, cent_dgr_ind = 0, field_of_study_id = 0, field_of_study_name = 'none', field_n = 0, dl_n = 0, dl_researcher = FALSE))
+```
+
+```{r}
+tbl_author_dyn %>% head(100)
+```
+
+### Others
+
+```{r}
+tbl_author_paper <- readRDS('../../temp/tbl_author_paper.rds')
+```
+
+```{r}
+tbl_author_paper %>% glimpse()
+```
+
+```{r}
+tbl_author_inst_year <- tbl_author_paper %>%
+  count(author_id, year, affiliation_id, type) %>%
+  group_by(author_id, year) %>%
+  arrange(desc(n)) %>%
+  slice(1) %>%
+  ungroup()
+```
+
+```{r}
+tbl_author_inst_year %>% head()
+```
+
+
+```{r}
+tbl_transitions <- tbl_author_inst_year %>%
+  select(-n) %>%
+  group_by(author_id) %>% 
+  arrange(year) %>%
+  mutate(ui_switch = type == 0 & lag(type) == 1) %>%
+  filter(ui_switch == TRUE | lead(ui_switch == TRUE)) %>%
+  ungroup() %>%
+  arrange(author_id, year)
+```
+
+```{r}
+tbl_transitions %<>%
+  select(author_id, year, affiliation_id, ui_switch) %>%
+  group_by(author_id) %>%
+  mutate(affil_id_from = lag(affiliation_id, 1)) %>%
+  ungroup() %>%
+  filter(ui_switch == TRUE) %>%
+  rename(affil_id_to = affiliation_id) %>%
+  left_join(tbl(con, "mag_affiliation"), by = c('affil_id_from' = 'id'), copy = TRUE ) %>%
+  left_join(tbl(con, "mag_affiliation"), by = c('affil_id_to' = 'id'), copy = TRUE ) %>%
+  left_join(tbl(con, "mag_authors"), by = c('author_id' = 'id'), copy = TRUE ) %>%  
+  rename(author_name = name,
+         affil_name_from = affiliation.x,
+         affil_name_to = affiliation.y) %>%
+  select(author_id, author_name, year, affil_id_from, affil_name_from, affil_id_to, affil_name_to)
+```
+
+```{r}
+tbl_transitions %>% write_csv('../../temp/tbl_transitions.csv')
+```
+
+
+
+
+
+
+
+
+
