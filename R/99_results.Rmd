@@ -153,6 +153,11 @@ tbl_author_dyn %<>%
   replace_na(list(cent_dgr = 0, cent_dgr_ind = 0, field_of_study_id = 0, field_of_study_name = 'none', field_n = 0, dl_n = 0, dl_researcher = FALSE))
 ```
 
+```{r}
+tbl_author_dyn %>% head(100)
+```
+
+
 ### Field of study
 
 ```{r}
@@ -191,6 +196,7 @@ tbl_author_stat %<>%
 
 Since our data contains 
 ```{r}
+set.seed(1337)
 library(MatchIt)
 match_psm <- tbl_author_stat %>% 
   mutate(author_type = (author_type %>% factor() %>% as.numeric()) -1 ) %>%
@@ -443,5 +449,46 @@ data_surv %>%
 
 ggsave("fig_timeline_switch.pdf", path = '../../output/', device = 'pdf', width = 10, height = 5)
 ```
+
+# Diff-in-Diff
+
+```{r}
+data_surv %>% skim()
+```
+
+```{r}
+data_did <- data_surv %>%
+  group_by(author_id) %>%
+  mutate(switcher = max(transited),
+         transited_t = ifelse(transited == TRUE, 1, 0)) %>%
+  mutate(transited_t = transited_t + lag(transited_t, 1)) %>%
+  ungroup()
+```
+
+```{r}
+fit_did_blank <- lm(citation_rank ~ switcher, data = data_did)
+fit_did_blank %>% summary()
+```
+
+```{r}
+fit_did_base <- lm(citation_rank ~ switcher + transited + seniority, data = data_did)
+fit_did_base %>% summary()
+```
+
+```{r}
+fit_did_1 <- lm(citation_rank ~ switcher  + (transited_t + dl_researcher)^2 +  seniority + transited_t  + gender + field_of_study_name, data = data_did)
+fit_did_1 %>% summary()
+```
+
+```{r}
+library(interplot)
+#library(interactions)
+```
+
+### Template new plotting model
+```{r}
+fit_did_1 %>% interplot(var1 ="switcher", var2 = "transited_t", hist=F) 
+```
+
 
 

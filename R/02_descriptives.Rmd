@@ -133,7 +133,7 @@ tbl_transitions <- tbl_author_inst_year %>%
   select(-n) %>%
   group_by(author_id) %>% 
   arrange(year) %>%
-  mutate(ui_switch = type == 0 & lag(type) == 1) %>%
+  mutate(ui_switch = affiliation_id != lag(affiliation_id)) %>%
   filter(ui_switch == TRUE | lead(ui_switch == TRUE)) %>%
   ungroup() %>%
   arrange(author_id, year)
@@ -149,16 +149,26 @@ tbl_transitions %<>%
   rename(affil_id_to = affiliation_id) %>%
   left_join(tbl(con, "mag_affiliation"), by = c('affil_id_from' = 'id'), copy = TRUE ) %>%
   left_join(tbl(con, "mag_affiliation"), by = c('affil_id_to' = 'id'), copy = TRUE ) %>%
+  left_join(tbl(con, "affiliation_type"), by = c('affil_id_from' = 'id'), copy = TRUE ) %>%  
+  left_join(tbl(con, "affiliation_type"), by = c('affil_id_to' = 'id'), copy = TRUE ) %>%  
   left_join(tbl(con, "mag_authors"), by = c('author_id' = 'id'), copy = TRUE ) %>%  
   rename(author_name = name,
          affil_name_from = affiliation.x,
-         affil_name_to = affiliation.y) %>%
-  select(author_id, author_name, year, affil_id_from, affil_name_from, affil_id_to, affil_name_to)
+         affil_name_to = affiliation.y,
+         affil_type_from = type.x,
+         affil_type_to = type.y) %>%
+  select(author_id, author_name, year, affil_id_from, affil_name_from, affil_type_from,  affil_id_to, affil_name_to, affil_type_to)
 ```
 
 ```{r}
 tbl_transitions %>% write_csv('../../temp/tbl_transitions.csv')
 ```
+
+```{r}
+tbl_transitions %>%
+  filter(affil_type_from != affil_type_to)
+```
+
 
 
 
