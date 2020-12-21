@@ -42,6 +42,14 @@ Sources:
   - reinforcement learning
 - We keep document with and without a DOI
 
+### Making the EDA data
+
+To create the EDA dataset including a fuzzy match between MAG institutes and Nature university rankings:
+
+`python ai_research/make_eda_data.py`
+
+Processed datasets are stored in `data/processed`.
+
 
 --------
 

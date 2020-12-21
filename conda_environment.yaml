@@ -12,6 +12,10 @@ dependencies:
   - jupyter
   - ipython
   - psycopg2
+  - toolz
+  - geopandas
+  - altair
+  - selenium
   # Put any conda dependencies here
 
   - pip:
@@ -31,6 +35,9 @@ dependencies:
     - coverage
     - awscli
     - flake8
+    - webdriver-manager
+    - altair_saver
+    - fuzzywuzzy
   - python-dotenv>=0.5.1
   - jupyter_contrib_nbextensions
   - jupyter_nbextensions_configurator
