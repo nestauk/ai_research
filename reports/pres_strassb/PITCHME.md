@@ -163,11 +163,12 @@ NESTA, UK
 
 # Survival Analysis
 
-* Aim: Identifying drivers of UI transition
-* Model: Cox proportional hazard (DV: Propability of UI transition)
-* Sample: All academia & academia-industry trajectory researchers
+- Aim: Identifying drivers of UI transition
+- Model: Cox proportional hazard (DV: Propability of UI transition)
+- Sample: All academia & academia-industry trajectory researchers
 
 ---
+
 ![bg 65%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T4_survival.png)
 
 ---
@@ -175,7 +176,6 @@ NESTA, UK
 ![](#fff)
 
 ---
-
 
 - Deep learning researchers are more likely to transition into industry
 - Researchers with a more extended network in general and to colleagues in industry are more likely to transiion
@@ -199,12 +199,12 @@ NESTA, UK
 ---
 
 
-- Compared with very similar colleagues that don't transition, those researchers that do produce more impactful research (higher **cit$^{rank}$**)
-
-- There is some indication that over time their impact decreases: Fewer publications of breakthrough research (possible); one-hit-wonder?
+- Compared with very similar colleagues that don't transition, university-industry switcher produce more impactful research (higher **cit$^{rank}$**)
+- This sems to happen shortly after they transit
+- There is some indication that over time their impact decreases.
+- Industry skims of peaking researchers, and milks them dry?
 
 ---
-
 
 
 ![bg](#123)
