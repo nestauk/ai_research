@@ -7,7 +7,7 @@ paginate: true
 _paginate: false
 ---
 
-![bg blur](https://source.unsplash.com/glRqyWJgUeY)
+![bg](https://source.unsplash.com/glRqyWJgUeY)
 
 ![](#fff)
 # <!--fit--> The Privatization of AI Research(-ers):
@@ -85,7 +85,7 @@ NESTA, UK
 - Fairness/bias issues
 --- 
 
-![bg left 70%](https://source.unsplash.com/CWbxnAk77so)
+![bg left](https://source.unsplash.com/CWbxnAk77so)
 #### Possible transition mechanisms
 
 
@@ -150,7 +150,8 @@ NESTA, UK
 ---
 - **Transition** (dep. in survival model): 1/0 researcher changes into industry. Publications with industry affiliation for 2 consecutive years.
 - **cit$^{rank}$** (dep. in diff-in-diff): research performance and impact 1 - researcher with highest, 0 - researcher with lowest performance
-- Co-publication network centrality per year overall **cent$^{dgr}$** and only links to industry **cent$^{dgr-ind}$**
+- Co-publication network centrality per year overall 
+**cent$^{dgr}$** and only links to industry **cent$^{dgr-ind}$**
 
 - **paper$^{dn}$**: N papers corresponding year
 - **DeepLearning**: Paper within the area
