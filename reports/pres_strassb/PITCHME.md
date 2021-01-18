@@ -7,8 +7,9 @@ paginate: true
 _paginate: false
 ---
 
-![bg](./assets/gradient.jpg)
+![bg blur](https://source.unsplash.com/glRqyWJgUeY)
 
+![](#fff)
 # <!--fit--> The Privatization of AI Research(-ers):
 
 Causes and Potential Consequences
@@ -40,16 +41,6 @@ NESTA, UK
 
 ---
 
-
-![bg](#123)
-![](#fff)
-
-# Main questions we look into
-- Does the private sector "harvest" the best performing AI researchers? ✅
-- After transitioning into industry, does their (publicly available) output decline? ✅
-- What does that mean for public interest, ethics, fairness and safety in emerging AI technologies? 🧐
-
----
 
 ![bg right 70%](https://pbs.twimg.com/profile_images/1542707565/image_400x400.jpg)
 
@@ -123,15 +114,67 @@ NESTA, UK
 - Diff-in-diff: consequences of transition
 
 ---
+![bg](#123)
+![](#fff)
+### <!--fit--> Some EDA first 📊
+
+---
+
+![bg](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/f1_fos_trends.png)
 
 
 ---
-### <!--fit--> :ok_hand:
+
+![bg 90%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/f2_part_trend.png)
+
 
 ---
 
-![bg 40% opacity blur](https://avatars1.githubusercontent.com/u/3993388?v=4)
+![bg 95%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/f3_fos_evol.png)
 
-### Created by Yuki Hattori ([@yhatt](https://github.com/yhatt))
 
-https://github.com/yhatt/marp-cli-example
+---
+
+![bg 70%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/f4_trans_types_evol.png)
+
+
+---
+
+![bg 90%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/f5_net_flows.png)
+
+
+---
+
+![bg 90%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/f6_trans_rankings.png)
+
+---
+- **Transition** (dep. in survival model): 1/0 researcher changes into industry. Publications with industry affiliation for 2 consecutive years.
+- **cit$^{rank}$** (dep. in diff-in-diff): research performance and impact 1 - researcher with highest, 0 - researcher with lowest performance
+- Co-publication network centrality per year overall **cent$^{dgr}$** and only links to industry **cent$^{dgr-ind}$**
+
+- **paper$^{dn}$**: N papers corresponding year
+- **DeepLearning**: Paper within the area
+- **Seniority**, **Gender**, **field-of-research** controls
+
+---
+### Descriptives
+
+---
+### Survival analysis
+
+---
+### Diff-in-diff
+
+---
+
+
+![bg](#123)
+![](#fff)
+
+# All in all?
+- Does the private sector "harvest" the best performing AI researchers? ✅
+- After transitioning into industry, does their (publicly available) output decline? ✅
+- What does that mean for public interest, ethics, fairness and safety in emerging AI technologies? 🧐
+
+---
+
