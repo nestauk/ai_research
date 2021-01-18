@@ -1,6 +1,6 @@
 ---
 marp: true
-title: Privatizaion of AI reseach
+title: Privatization of AI research
 description: 
 theme: uncover
 paginate: true
@@ -78,7 +78,7 @@ NESTA, UK
 
 ### Potential risks of AI privatization
 
-- potential homogenisation of public and private research spheres
+- potential homogenization of public and private research spheres
 - potential neglect of long-term negative social externalities
 - steering of the trajectory towards "de-democratization" of AI due to focus on data and resource-hungry techniques rather than promotion of "leaner" approaches
 - Worker displacement without productivity growth
@@ -101,7 +101,7 @@ NESTA, UK
 - They advance AI tech but also study ethical risks
 - We don't know what we don't know - not everything is pulished
 - Commercial interest may not be always in line with research agendas of employees
-- Start-up achquisition argument
+- Start-up acquisition argument
 
 #### Argument for bolstering public AI research 
 
@@ -130,15 +130,7 @@ NESTA, UK
 
 ---
 
-![bg 95%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/f3_fos_evol.png)
 
-
----
-
-![bg 70%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/f4_trans_types_evol.png)
-
-
----
 
 ![bg 90%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/f5_net_flows.png)
 
@@ -189,6 +181,11 @@ NESTA, UK
 
 - There is some indication that over time their impact decreases: Fewer publications of breakthrough research (possible); one-hit-wonder?
 
+
+---
+
+![bg 60%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/fig_interaction_1.png)
+
 ---
 
 
@@ -200,4 +197,37 @@ NESTA, UK
 - Does the private sector "harvest" the best performing AI researchers? **Yes** ✅
 - After transitioning into industry, does their (publicly available) output decline? **Possibly** ✅
 - What does that mean for public interest, ethics, fairness and safety in emerging AI technologies? **Public research needs to remain attractive for star- AI-researchers** 🧐
+
+
+---
+
+## Next steps for this paper
+- Solidify framework
+- More detailed analysis of the transition outcomes: 
+    - diversity and novely ouf output
+    - collaboration patterns
+- From knowledge diffusion back to knowledge production?
+
+---
+
+## Now what - policy implication
+
+- There is nothing wrong with impactful industry AI labs
+- Better coordination and funding of public mission-oriented AI research
+- Development and enforcement of guidelines / certification of AI
+- What do industrial AI ethics units do? Mapping/evaluation? "Alignment"
+- Where do commercial interest clash with public objectives?
+
+---
+
+# Backup - slides
+---
+
+![bg 95%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/f3_fos_evol.png)
+
+
+---
+
+![bg 70%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/f4_trans_types_evol.png)
+
 
