@@ -161,29 +161,30 @@ NESTA, UK
 
 ![bg 95%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T3_descriptives.png)
 
----
+# Survival Analysis
 ![bg 65%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T4_survival.png)
 
 ---
 ![bg](#123)
 ![](#fff)
 
-# Survival Analysis
+---
+
 
 - Deep learning researchers are more likely to transition into industry
 - Researchers with a more extended network in general and to colleagues in industry are more likely to transiion
 - The impact of research output as measured by citations (not quantity of publications) is crucial when explaining transitions into industry
 
 
----
+# Diff-in-diff exploring consequences
 
 ![bg 55%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T5_d-i-d.png)
 
 ---
 ![bg](#123)
 ![](#fff)
+---
 
-# Diff-in-diff exploring consequences
 
 - Compared with very similar colleagues that don't transition, those researchers that do produce more impactful research (higher **cit$^{rank}$**)
 
