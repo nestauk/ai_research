@@ -16,6 +16,7 @@ Causes and Potential Consequences
 
 From university-industry interaction to public research brain-drain?
 
+
 <style scoped>a { color: #eee; }</style>
 
 <!-- This is presenter note. You can write down notes through HTML comment. -->
@@ -29,6 +30,7 @@ Aalborg Univ. Business School, DK
 Juan Mateos-Garcia, Konstantinos Stathoulopoulos
 NESTA, UK
 
+Download the paper [here](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/assets/AI_Privatization_19.1.pdf) 📝
 ---
 
 ![bg](#123)
