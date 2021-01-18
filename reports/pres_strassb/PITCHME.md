@@ -30,7 +30,8 @@ Aalborg Univ. Business School, DK
 Juan Mateos-Garcia, Konstantinos Stathoulopoulos
 NESTA, UK
 
-Download the paper [here](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/assets/AI_Privatization_19.1.pdf) 📝
+## Download the paper [here](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/assets/AI_Privatization_19.1.pdf) 📝
+
 ---
 
 ![bg](#123)
