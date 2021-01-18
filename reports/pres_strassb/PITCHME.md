@@ -158,24 +158,46 @@ NESTA, UK
 - **Seniority**, **Gender**, **field-of-research** controls
 
 ---
-### Descriptives
+
+![bg 95%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T3_descriptives.png)
 
 ---
-### Survival analysis
+![bg 65%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T4_survival.png)
 
 ---
-### Diff-in-diff
+![bg](#123)
+![](#fff)
+
+# Survival Analysis
+
+- Deep learning researchers are more likely to transition into industry
+- Researchers with a more extended network in general and to colleagues in industry are more likely to transiion
+- The impact of research output as measured by citations (not quantity of publications) is crucial when explaining transitions into industry
+
 
 ---
+
+![bg 55%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T5_d-i-d.png)
+
+---
+![bg](#123)
+![](#fff)
+
+# Diff-in-diff exploring consequences
+
+- Compared with very similar colleagues that don't transition, those researchers that do produce more impactful research (higher **cit$^{rank}$**)
+
+- There is some indication that over time their impact decreases: Fewer publications of breakthrough research (possible); one-hit-wonder?
+
+---
+
 
 
 ![bg](#123)
 ![](#fff)
 
 # All in all?
-- Does the private sector "harvest" the best performing AI researchers? ✅
-- After transitioning into industry, does their (publicly available) output decline? ✅
-- What does that mean for public interest, ethics, fairness and safety in emerging AI technologies? 🧐
-
----
+- Does the private sector "harvest" the best performing AI researchers? **Yes** ✅
+- After transitioning into industry, does their (publicly available) output decline? **Possibly** ✅
+- What does that mean for public interest, ethics, fairness and safety in emerging AI technologies? **Public research needs to remain attractive for star- AI-researchers** 🧐
 
