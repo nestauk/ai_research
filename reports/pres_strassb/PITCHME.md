@@ -162,6 +162,12 @@ NESTA, UK
 ![bg 95%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T3_descriptives.png)
 
 # Survival Analysis
+
+* Aim: Identifying drivers of UI transition
+* Model: Cox proportional hazard (DV: Propability of UI transition)
+* Sample: All academia & academia-industry trajectory researchers
+
+---
 ![bg 65%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T4_survival.png)
 
 ---
@@ -177,6 +183,13 @@ NESTA, UK
 
 
 # Diff-in-diff exploring consequences
+
+* Aim: Identify impact of AI transition on research performance & knowledge dissemination
+* Modl: Diff-in-Diff regression (DV: Researcher's citation rank) 
+* Sample: PSM matched sample of university-industry with one university remaining researcher
+* Treatment: University Industry transition (of matched pair)
+
+---
 
 ![bg 55%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T5_d-i-d.png)
 
