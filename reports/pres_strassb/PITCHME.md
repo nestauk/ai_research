@@ -153,19 +153,33 @@ NESTA, UK
 
 ![bg 95%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T3_descriptives.png)
 
+# Survival Analysis
+
+- Aim: Identifying drivers of UI transition
+- Model: Cox proportional hazard (DV: Propability of UI transition)
+- Sample: All academia & academia-industry trajectory researchers
+
 ---
+
 ![bg 65%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T4_survival.png)
 
 ---
 ![bg](#123)
 ![](#fff)
 
-# Survival Analysis
+---
 
 - Deep learning researchers are more likely to transition into industry
 - Researchers with a more extended network in general and to colleagues in industry are more likely to transiion
 - The impact of research output as measured by citations (not quantity of publications) is crucial when explaining transitions into industry
 
+
+# Diff-in-diff exploring consequences
+
+* Aim: Identify impact of AI transition on research performance & knowledge dissemination
+* Modl: Diff-in-Diff regression (DV: Researcher's citation rank) 
+* Sample: PSM matched sample of university-industry with one university remaining researcher
+* Treatment: University Industry transition (of matched pair)
 
 ---
 
@@ -174,12 +188,13 @@ NESTA, UK
 ---
 ![bg](#123)
 ![](#fff)
+---
 
-# Diff-in-diff exploring consequences
 
-- Compared with very similar colleagues that don't transition, those researchers that do produce more impactful research (higher **cit$^{rank}$**)
-
-- There is some indication that over time their impact decreases: Fewer publications of breakthrough research (possible); one-hit-wonder?
+- Compared with very similar colleagues that don't transition, university-industry switcher produce more impactful research (higher **cit$^{rank}$**)
+- This sems to happen shortly after they transit
+- There is some indication that over time their impact decreases.
+- Industry skims of peaking researchers, and milks them dry?
 
 
 ---
@@ -187,7 +202,6 @@ NESTA, UK
 ![bg 60%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/fig_interaction_1.png)
 
 ---
-
 
 
 ![bg](#123)
