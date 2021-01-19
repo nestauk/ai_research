@@ -185,6 +185,9 @@ NESTA, UK
 
 ![bg 55%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T5_d-i-d.png)
 
+---
+
+![bg 60%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/fig_interaction_1.png)
 
 ---
 ![bg](#123)
@@ -196,10 +199,6 @@ NESTA, UK
 
 - There is some indication that over time their impact decreases: Fewer publications of breakthrough research (possible); one-hit-wonder?
 
-
----
-
-![bg 60%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/fig_interaction_1.png)
 
 ---
 
