@@ -168,7 +168,7 @@ NESTA, UK
 ## Survival Analysis -insights
 
 - Deep learning researchers are more likely to transition into industry
-- Researchers with a more extended network in general and to colleagues in industry are more likely to transiion
+- Researchers with a more extended network to colleagues in industry are less likely to transiion
 - The impact of research output as measured by citations (not quantity of publications) is crucial when explaining transitions into industry
 
 
