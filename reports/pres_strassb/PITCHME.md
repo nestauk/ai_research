@@ -150,6 +150,7 @@ NESTA, UK
 
 ![bg 95%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T3_descriptives.png)
 
+---
 ### Survival Analysis
 
 - Aim: Identifying drivers of UI transition
@@ -158,7 +159,7 @@ NESTA, UK
 
 ---
 
-![bg left 90%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T4_survival.png)
+![bg  65%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T4_survival.png)
 
 ---
 ![bg](#123)
