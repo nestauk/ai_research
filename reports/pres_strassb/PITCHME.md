@@ -150,16 +150,15 @@ NESTA, UK
 
 ![bg 95%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T3_descriptives.png)
 
----
-
-![bg left 90%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T4_survival.png)
-
 ### Survival Analysis
 
 - Aim: Identifying drivers of UI transition
 - Model: Cox proportional hazard (DV: Propability of UI transition)
 - Sample: All academia & academia-industry trajectory researchers
 
+---
+
+![bg left 90%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T4_survival.png)
 
 ---
 ![bg](#123)
@@ -184,7 +183,6 @@ NESTA, UK
 ---
 
 ![bg 55%](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/media/T5_d-i-d.png)
-
 
 
 ---
