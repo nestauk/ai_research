@@ -55,7 +55,7 @@ NESTA, UK
 ---
 
 
-![bg left 70%](https://docs.google.com/presentation/d/1ZUimafgXCBSLsgbacd6-a-dqO7yLyzIl1ZJbiCBUUT4/edit#slide=id.g903834896d_0_102)
+![bg left 70%]()
 
 - Critique of recent large language models
 - Concerns about training data and fairness
@@ -70,7 +70,7 @@ NESTA, UK
     - Star researches leading industry AI labs
 ---
 
-![bg left 70%](https://upload.wikimedia.org/wikipedia/commons/6/6d/Timnit_Gebru_crop.jpg)
+![bg left 70%](https://docs.google.com/presentation/d/1ZUimafgXCBSLsgbacd6-a-dqO7yLyzIl1ZJbiCBUUT4/edit#slide=id.g903834896d_0_102)
 
 ---
 
