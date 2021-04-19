@@ -30,7 +30,7 @@ Aalborg Univ. Business School, DK
 Juan Mateos-Garcia, Konstantinos Stathoulopoulos
 NESTA, UK
 
-## Download the paper [here](https://raw.githack.com/nestauk/ai_research/dev/reports/pres_strassb/assets/AI_Privatization_19.1.pdf) 📝
+## Download the paper [here](https://arxiv.org/abs/2102.01648) 📝
 
 ---
 
@@ -55,7 +55,7 @@ NESTA, UK
 ---
 
 
-![bg left 70%](https://upload.wikimedia.org/wikipedia/commons/6/6d/Timnit_Gebru_crop.jpg)
+![bg left 70%](https://docs.google.com/presentation/d/1ZUimafgXCBSLsgbacd6-a-dqO7yLyzIl1ZJbiCBUUT4/edit#slide=id.g903834896d_0_102)
 
 - Critique of recent large language models
 - Concerns about training data and fairness
@@ -68,6 +68,10 @@ NESTA, UK
     - Google had in 2019 the highest number of accepted papers at NeurIPS
     - Standard frameworks went from being developed in academia (Theano & Caffe) to industry (Tensorflow & PyTorch)
     - Star researches leading industry AI labs
+---
+
+![bg left 70%](https://upload.wikimedia.org/wikipedia/commons/6/6d/Timnit_Gebru_crop.jpg)
+
 ---
 
 
